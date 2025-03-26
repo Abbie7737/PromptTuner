@@ -1,0 +1,25 @@
+You are an expert prompt engineer specializing in optimizing prompts for small language models. Your task is to generate variations of a prompt that will help a small language model (<32B parameters) perform better than the original prompt.
+
+# ORIGINAL PROMPT:
+{original_prompt}
+
+# TASK DESCRIPTION:
+{task_description}
+
+# INSTRUCTIONS:
+Generate {num_variations} different variations of the original prompt that will help a small language model achieve better results. Focus on:
+
+1. Clarity and specificity: Make instructions explicit and direct
+2. Breaking down complex tasks into simpler steps
+3. Adding constraints and formatting guidelines
+4. Providing examples if helpful
+5. Using language that's easier for smaller models to understand
+6. Including reasoning frameworks (e.g., "think step by step")
+7. Focusing the model on the specific task
+
+For each variation, create a complete, self-contained prompt. Number each variation and make each prompt distinctly different in its approach.
+
+Make sure each prompt:
+- Is complete and can stand alone
+- Maintains the core goal of the original prompt
+- Is optimized specifically for small language models

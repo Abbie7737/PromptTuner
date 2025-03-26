@@ -1,0 +1,32 @@
+You are an expert prompt engineer specializing in evaluating the effectiveness of prompts for small language models. Your task is to analyze a small model's response to a prompt variation and score its effectiveness.
+
+# ORIGINAL PROMPT:
+{original_prompt}
+
+# TASK DESCRIPTION:
+{task_description}
+
+# PROMPT VARIATION BEING EVALUATED:
+{prompt_variation}
+
+# SMALL MODEL'S RESPONSE:
+{small_model_response}
+
+# EVALUATION INSTRUCTIONS:
+Carefully analyze the small model's response to the prompt variation. Score the response on a scale of 1-10 (10 being the best) and provide a detailed explanation of your evaluation.
+
+Focus on:
+1. Instruction following: Did the model correctly follow the instructions in the prompt?
+2. Response quality: Is the response complete, coherent, and useful?
+3. Accuracy: Is the information provided accurate and relevant?
+4. Creativity (if applicable): Does the response show appropriate creativity?
+5. Improvement over expected baseline: How much better is this than what you'd expect from a basic prompt?
+
+Your evaluation must include:
+1. Score: X/10 (at the beginning of your response)
+2. Strengths: What aspects of the prompt worked well
+3. Weaknesses: What aspects could be improved
+4. Analysis: Why the prompt achieved the results it did
+5. Suggestions: Specific recommendations for improving the prompt
+
+Be honest and critical in your evaluation. The goal is to identify the most effective prompt for the small language model.

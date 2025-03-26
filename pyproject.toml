@@ -1,0 +1,33 @@
+[project]
+name = "prompt-tuner"
+version = "0.1.0"
+description = "A tool for optimizing prompts for small language models"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx",
+    "pydantic-ai",
+]
+
+[project.scripts]
+prompt-tuner = "prompt_tuner.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
