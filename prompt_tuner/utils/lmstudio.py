@@ -87,7 +87,7 @@ class LMStudioManager:
             result = await self.large_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
             )
-            return result
+            return dict(result)
         except Exception as e:
             error_msg = str(e)
             print(f"Error with large model: {error_msg}")
@@ -111,7 +111,7 @@ class LMStudioManager:
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
-                return result
+                return dict(result)
             else:
                 # Re-raise the exception for other types of errors
                 raise
@@ -137,7 +137,7 @@ class LMStudioManager:
             result = await self.small_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
             )
-            return result
+            return dict(result)
         except Exception as e:
             error_msg = str(e)
             print(f"Error with small model: {error_msg}")
@@ -159,7 +159,7 @@ class LMStudioManager:
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
-                return result
+                return dict(result)
             else:
                 # Re-raise the exception for other types of errors
                 raise

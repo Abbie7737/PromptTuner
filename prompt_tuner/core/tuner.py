@@ -204,8 +204,8 @@ class PromptTuner:
                 refined_eval_summary.append(f"{summary} - `{preview}`")
 
             # Find the best prompts from both rounds
-            best_initial_score = 0
-            best_refined_score = 0
+            best_initial_score = 0.0
+            best_refined_score = 0.0
 
             if results["evaluation_round_1"]:
                 sorted_initial = sorted(
@@ -389,7 +389,7 @@ This prompt was selected from the {best_round}.
             print("Received evaluation from large model")
 
             # Parse score and explanation from evaluation
-            score = 0
+            score = 0.0
             explanation = eval_content
 
             # Extract score with regex
@@ -471,14 +471,14 @@ This prompt was selected from the {best_round}.
             {"role": "user", "content": "Refine this prompt to improve results."},
         ]
 
-        response = await self.lmstudio.run_on_large_model(
+        response_dict = await self.lmstudio.run_on_large_model(
             messages=messages, temperature=0.5
         )
 
-        content: str = response["choices"][0]["message"]["content"]
+        content: str = response_dict["choices"][0]["message"]["content"]
 
         # Extract the refined prompt
-        refined_prompt = content
+        refined_prompt: str = content
 
         # If the response has clear delimiters, extract between them
         if "```" in content:
@@ -525,11 +525,11 @@ This prompt was selected from the {best_round}.
             {"role": "user", "content": "Explain why this is the best prompt."},
         ]
 
-        response = await self.lmstudio.run_on_large_model(
+        response_dict = await self.lmstudio.run_on_large_model(
             messages=messages, temperature=0.3
         )
 
-        explanation: str = response["choices"][0]["message"]["content"]
+        explanation: str = response_dict["choices"][0]["message"]["content"]
         return explanation
 
     async def _generate_report(self, results: Dict[str, Any]) -> str:
@@ -563,8 +563,8 @@ This prompt was selected from the {best_round}.
                 )
 
             # Determine which round had the best prompt
-            best_initial_score = 0
-            best_refined_score = 0
+            best_initial_score = 0.0
+            best_refined_score = 0.0
             best_round = "unknown"
 
             if simplified_eval_round_1:
@@ -607,11 +607,11 @@ This prompt was selected from the {best_round}.
                 {"role": "user", "content": "Create a report of the prompt tuning process."},
             ]
 
-            response = await self.lmstudio.run_on_large_model(
+            response_dict = await self.lmstudio.run_on_large_model(
                 messages=messages, temperature=0.3, max_tokens=4096
             )
 
-            report: str = response["choices"][0]["message"]["content"]
+            report: str = response_dict["choices"][0]["message"]["content"]
             return report
 
         except Exception as e:

@@ -21,11 +21,11 @@ def test_format_with_variables() -> None:
     # Create a test prompt file
     os.makedirs("test_prompts", exist_ok=True)
     with open("test_prompts/test.prompt", "w") as f:
-        f.write("Hello, {name}! The answer is {answer}.")
+        f.write("Hello, {name_arg}! The answer is {answer}.")
 
     try:
         loader = PromptLoader("test_prompts")
-        result = loader.format("test", name="World", answer=42)
+        result = loader.format(name="test", name_arg="World", answer=42)
         assert result == "Hello, World! The answer is 42."
     finally:
         # Clean up

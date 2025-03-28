@@ -11,6 +11,6 @@ if __name__ == "__main__":
     os.chdir(project_root)
     
     # Run mypy excluding docs
-    cmd = ["mypy", "--exclude", "docs/", "prompt_tuner"]
+    cmd = ["mypy", "--exclude", "docs/", "--no-namespace-packages", "prompt_tuner"]
     result = subprocess.run(cmd)
     sys.exit(result.returncode)
