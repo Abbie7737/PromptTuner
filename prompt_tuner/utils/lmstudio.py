@@ -84,9 +84,10 @@ class LMStudioManager:
             API response with completion data
         """
         try:
-            return await self.large_model.chat_completion(
+            result = await self.large_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
             )
+            return result
         except Exception as e:
             error_msg = str(e)
             print(f"Error with large model: {error_msg}")
@@ -105,11 +106,12 @@ class LMStudioManager:
                     simplified_messages.append(msg)
 
                 # Try again with simplified messages
-                return await self.large_model.chat_completion(
+                result = await self.large_model.chat_completion(
                     messages=simplified_messages,
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
+                return result
             else:
                 # Re-raise the exception for other types of errors
                 raise
@@ -132,9 +134,10 @@ class LMStudioManager:
             API response with completion data
         """
         try:
-            return await self.small_model.chat_completion(
+            result = await self.small_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
             )
+            return result
         except Exception as e:
             error_msg = str(e)
             print(f"Error with small model: {error_msg}")
@@ -151,11 +154,12 @@ class LMStudioManager:
                     simplified_messages.append(msg)
 
                 # Try again with simplified messages
-                return await self.small_model.chat_completion(
+                result = await self.small_model.chat_completion(
                     messages=simplified_messages,
                     temperature=temperature,
                     max_tokens=max_tokens,
                 )
+                return result
             else:
                 # Re-raise the exception for other types of errors
                 raise

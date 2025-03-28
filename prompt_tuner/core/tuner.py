@@ -46,7 +46,7 @@ class PromptTuner:
         """
         # Start tracking results for final report
         run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
-        results = {
+        results: Dict[str, Any] = {
             "run_id": run_id,
             "original_prompt": original_prompt,
             "task_description": task_description,
@@ -190,14 +190,14 @@ class PromptTuner:
 
             # Extract evaluation scores to include in the report
             initial_eval_summary = []
-            for i, eval_item in enumerate(results["evaluation_round_1"]):
+            for i, eval_item in enumerate(results["evaluation_round_1"] or []):
                 # Add summary entry with shortened prompt preview
                 summary = f"{i + 1}. Score: {eval_item['score']:.1f}/10"
                 preview = eval_item['prompt'][:80] + "..." if len(eval_item['prompt']) > 80 else eval_item['prompt']
                 initial_eval_summary.append(f"{summary} - `{preview}`")
 
             refined_eval_summary = []
-            for i, eval_item in enumerate(results["evaluation_round_2"]):
+            for i, eval_item in enumerate(results["evaluation_round_2"] or []):
                 # Add summary entry with shortened prompt preview
                 summary = f"{i + 1}. Score: {eval_item['score']:.1f}/10"
                 preview = eval_item['prompt'][:80] + "..." if len(eval_item['prompt']) > 80 else eval_item['prompt']
@@ -209,11 +209,11 @@ class PromptTuner:
 
             if results["evaluation_round_1"]:
                 sorted_initial = sorted(
-                    results["evaluation_round_1"],
+                    results["evaluation_round_1"], 
                     key=lambda x: x["score"],
                     reverse=True,
                 )
-                best_initial_score = sorted_initial[0]["score"]
+                best_initial_score = float(sorted_initial[0]["score"])
 
             if results["evaluation_round_2"]:
                 sorted_refined = sorted(
@@ -221,7 +221,7 @@ class PromptTuner:
                     key=lambda x: x["score"],
                     reverse=True,
                 )
-                best_refined_score = sorted_refined[0]["score"]
+                best_refined_score = float(sorted_refined[0]["score"])
 
             # Determine which round had the best prompt
             best_score = max(best_initial_score, best_refined_score)
@@ -408,11 +408,13 @@ This prompt was selected from the {best_round}.
                     if re.match(r"^score:?\s*\d+(?:\.\d+)?", line, re.IGNORECASE):
                         try:
                             # Extract just the number
-                            score_text = re.search(r"(\d+(?:\.\d+)?)", line).group(1)
-                            score = float(score_text)
-                            print(f"Extracted score from line: {score}")
-                            break
-                        except (ValueError, IndexError, AttributeError):
+                            score_match = re.search(r"(\d+(?:\.\d+)?)", line)
+                            if score_match:
+                                score_text = score_match.group(1)
+                                score = float(score_text)
+                                print(f"Extracted score from line: {score}")
+                                break
+                        except (ValueError, IndexError):
                             print(f"Error parsing score from: {line}")
 
                 if score == 0:
@@ -473,7 +475,7 @@ This prompt was selected from the {best_round}.
             messages=messages, temperature=0.5
         )
 
-        content = response["choices"][0]["message"]["content"]
+        content: str = response["choices"][0]["message"]["content"]
 
         # Extract the refined prompt
         refined_prompt = content
@@ -527,7 +529,7 @@ This prompt was selected from the {best_round}.
             messages=messages, temperature=0.3
         )
 
-        explanation = response["choices"][0]["message"]["content"]
+        explanation: str = response["choices"][0]["message"]["content"]
         return explanation
 
     async def _generate_report(self, results: Dict[str, Any]) -> str:
@@ -569,13 +571,13 @@ This prompt was selected from the {best_round}.
                 sorted_initial = sorted(
                     simplified_eval_round_1, key=lambda x: x["score"], reverse=True
                 )
-                best_initial_score = sorted_initial[0]["score"]
+                best_initial_score = float(sorted_initial[0]["score"])
 
             if simplified_eval_round_2:
                 sorted_refined = sorted(
                     simplified_eval_round_2, key=lambda x: x["score"], reverse=True
                 )
-                best_refined_score = sorted_refined[0]["score"]
+                best_refined_score = float(sorted_refined[0]["score"])
 
             if best_initial_score >= best_refined_score:
                 best_round = "first evaluation round"
@@ -609,7 +611,7 @@ This prompt was selected from the {best_round}.
                 messages=messages, temperature=0.3, max_tokens=4096
             )
 
-            report = response["choices"][0]["message"]["content"]
+            report: str = response["choices"][0]["message"]["content"]
             return report
 
         except Exception as e:

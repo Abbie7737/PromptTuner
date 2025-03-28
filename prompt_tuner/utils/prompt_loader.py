@@ -3,13 +3,13 @@ Prompt loading utilities for Prompt Tuner.
 """
 
 import os
-from typing import Dict
+from typing import Any, Dict, Optional
 
 
 class PromptLoader:
     """Loads prompt templates from files."""
 
-    def __init__(self, prompt_dir: str = None) -> None:
+    def __init__(self, prompt_dir: Optional[str] = None) -> None:
         """
         Initialize the prompt loader.
 
@@ -70,7 +70,7 @@ class PromptLoader:
 
         return template
 
-    def format(self, name: str, **kwargs) -> str:
+    def format(self, name: str, **kwargs: Any) -> str:
         """
         Load and format a prompt template with variables.
 

@@ -7,7 +7,7 @@ import pytest
 from prompt_tuner.utils.prompt_loader import PromptLoader
 
 
-def test_prompt_loader_initialization():
+def test_prompt_loader_initialization() -> None:
     """Test that PromptLoader initializes correctly."""
     loader = PromptLoader()
     assert loader is not None
@@ -16,7 +16,7 @@ def test_prompt_loader_initialization():
     assert isinstance(loader.cache, dict)
 
 
-def test_format_with_variables():
+def test_format_with_variables() -> None:
     """Test formatting a prompt with variables."""
     # Create a test prompt file
     os.makedirs("test_prompts", exist_ok=True)
@@ -33,7 +33,7 @@ def test_format_with_variables():
         os.rmdir("test_prompts")
 
 
-def test_cache_usage():
+def test_cache_usage() -> None:
     """Test that caching works as expected."""
     os.makedirs("test_prompts", exist_ok=True)
     with open("test_prompts/cache_test.prompt", "w") as f:
@@ -71,7 +71,7 @@ def test_cache_usage():
         os.rmdir("test_prompts")
 
 
-def test_file_not_found():
+def test_file_not_found() -> None:
     """Test that appropriate error is raised when file not found."""
     loader = PromptLoader("nonexistent_dir")
     with pytest.raises(FileNotFoundError):
