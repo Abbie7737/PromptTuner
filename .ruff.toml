@@ -1,10 +1,10 @@
 # Exclude the docs directory from linting
 exclude = ["docs"]
 
-[lint]
-# Allow longer line length for specific paths
+# Line length setting
 line-length = 88
 
+[lint]
 [lint.per-file-ignores]
 # Allow long lines in test files
 "tests/*" = ["E501"]
