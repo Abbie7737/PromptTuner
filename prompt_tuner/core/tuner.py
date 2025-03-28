@@ -91,32 +91,43 @@ class PromptTuner:
 
         top_prompts = [eval_item["prompt"] for eval_item in sorted_evals[:2]]
 
-        # Phase 3: Refine best prompts
-        print("Refining top 2 prompts...")
-        print("Using large model to improve the best prompts based on evaluation...")
-        refined_prompts = []
-        for i, prompt in enumerate(top_prompts):
-            print(f"Refining prompt {i + 1}/2...")
-            refined = await self._refine_prompt(
-                prompt,
-                sorted_evals[i]["response"],
-                sorted_evals[i]["explanation"],
-                original_prompt,
-                task_description,
-            )
-            refined_prompts.append(refined)
-            print(f"Refinement {i + 1} complete")
-        print(f"Refined {len(refined_prompts)} prompts")
-        results["refined_prompts"] = refined_prompts
+        # Check if any first round score is above 9.1 to short circuit
+        best_first_round_score = sorted_evals[0]["score"] if sorted_evals else 0
+        if best_first_round_score > 9.1:
+            print(f"First round score {best_first_round_score:.1f} > 9.1, skipping refinement...")
+            refined_prompts: List[str] = []
+            refined_evals: List[Dict[str, Any]] = []
+            results["refined_prompts"] = refined_prompts
+            results["evaluation_round_2"] = refined_evals
+        else:
+            # Phase 3: Refine best prompts
+            print("Refining top 2 prompts...")
+            print("Using large model to improve the best prompts based on evaluation...")
+            refined_prompts = []
+            for i, prompt in enumerate(top_prompts):
+                print(f"Refining prompt {i + 1}/2...")
+                refined = await self._refine_prompt(
+                    prompt,
+                    sorted_evals[i]["response"],
+                    sorted_evals[i]["explanation"],
+                    original_prompt,
+                    task_description,
+                )
+                refined_prompts.append(refined)
+                print(f"Refinement {i + 1} complete")
+            print(f"Refined {len(refined_prompts)} prompts")
+            results["refined_prompts"] = refined_prompts
 
-        # Phase 4: Evaluate refined prompts
-        print("Evaluating refined prompts...")
-        print("Testing refined prompts on the small model and evaluating results...")
-        refined_evals = await self._evaluate_prompts(
-            refined_prompts, original_prompt, task_description
-        )
-        print("Final evaluation complete")
-        results["evaluation_round_2"] = refined_evals
+            # Phase 4: Evaluate refined prompts
+            print("Evaluating refined prompts...")
+            print("Testing refined prompts on the small model and evaluating results...")
+        if refined_prompts:
+            refined_evals = await self._evaluate_prompts(
+                refined_prompts, original_prompt, task_description
+            )
+            print("Final evaluation complete")
+            results["evaluation_round_2"] = refined_evals
+        print("Prompt evaluation process complete")
 
         # Phase 5: Select and explain best prompt
         print("Selecting and explaining the best prompt...")
