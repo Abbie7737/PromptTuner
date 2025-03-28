@@ -6,6 +6,25 @@ You are an expert prompt engineer specializing in optimizing prompts for small l
 # TASK DESCRIPTION:
 {task_description}
 
+# EXAMPLE:
+Let me demonstrate how I would improve a simple prompt with one variation.
+
+Original prompt: "Write a short story about a robot."
+
+My thought process:
+1. This prompt is vague and doesn't provide constraints or guidance
+2. A small model might struggle with generating a coherent narrative
+3. I should add structure, specificity, and step-by-step guidance
+4. I'll include formatting guidelines and length constraints
+
+Improved prompt: "Create a 250-word short story about a household robot that develops emotions. Structure your story with:
+1. Introduction: Establish the robot's purpose and setting (2-3 sentences)
+2. Development: Describe the first emotion the robot experiences and why (3-4 sentences)
+3. Conflict: Show how this emotion creates a problem (3-4 sentences)
+4. Resolution: Resolve the situation in a thoughtful way (2-3 sentences)
+
+Make your story touching but not overly complex. Focus on a single emotion like loneliness, joy, or curiosity."
+
 # INSTRUCTIONS:
 Generate {num_variations} different variations of the original prompt that will help a small language model achieve better results. Focus on:
 
@@ -17,7 +36,12 @@ Generate {num_variations} different variations of the original prompt that will 
 6. Including reasoning frameworks (e.g., "think step by step")
 7. Focusing the model on the specific task
 
-For each variation, create a complete, self-contained prompt. Number each variation and make each prompt distinctly different in its approach.
+For each variation:
+1. First, analyze the original prompt and identify its weaknesses
+2. Explain your thought process in improving the prompt (2-3 sentences)
+3. Create a complete, self-contained prompt variation
+
+Number each variation and make each prompt distinctly different in its approach.
 
 Make sure each prompt:
 - Is complete and can stand alone

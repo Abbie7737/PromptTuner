@@ -15,8 +15,39 @@ You are an expert prompt engineer specializing in refining prompts for small lan
 # EVALUATION:
 {evaluation}
 
+# EXAMPLE REFINEMENT:
+Let me demonstrate my thought process for refining a prompt.
+
+Prompt to refine: "Explain quantum computing to a high school student."
+
+Small model response: "Quantum computing uses quantum bits or qubits that can be both 0 and 1 at the same time due to superposition. This allows quantum computers to solve complex problems faster than classical computers. They might revolutionize fields like cryptography and drug discovery."
+
+Evaluation: "Score: 5/10. The explanation is too technical and jumps directly to complex concepts like superposition without building a foundation. The response is brief and lacks examples or analogies that would help a high school student understand."
+
+My refinement thought process:
+1. The prompt needs more structure to guide the model
+2. I should request analogies and examples appropriate for the audience
+3. I need to specify the level of detail and length
+4. Breaking down complex concepts into steps would help
+
+Refined prompt: "Explain quantum computing to a high school student in about 250 words. Structure your explanation as follows:
+
+1. Start with a simple analogy comparing classical computers (what students are familiar with) to quantum computers
+2. Explain the most basic concept first: how classical computers use bits (0s and 1s) versus how quantum computers use qubits
+3. Illustrate the concept of superposition using a real-world example a teenager would understand
+4. Mention 2-3 potential real-world applications that would be exciting to a high school student
+5. Conclude with why this technology matters for their future
+
+Avoid technical jargon, and when you must use technical terms, define them immediately. Use language and examples appropriate for a 16-year-old with basic science knowledge."
+
 # INSTRUCTIONS:
 Carefully analyze the prompt, the small model's response, and the evaluation. Create an improved version of the prompt that addresses the weaknesses identified in the evaluation while preserving the strengths.
+
+First, explain your thought process:
+1. Identify 3-4 specific issues from the evaluation that need addressing
+2. Describe how you plan to fix each issue (1 sentence per issue)
+3. Explain which strengths from the original prompt you'll preserve
+4. Outline your refinement strategy in 2-3 sentences
 
 Focus on:
 1. Clarifying instructions where the model showed confusion
@@ -34,4 +65,4 @@ Your refined prompt should:
 5. Include any effective techniques from the original prompt
 6. Be ready for immediate use with no further modifications
 
-Return ONLY the refined prompt, with no additional explanation or commentary.
+Return ONLY the refined prompt after your thought process, with no additional explanation or commentary.

@@ -12,8 +12,43 @@ You are an expert prompt engineer specializing in evaluating the effectiveness o
 # SMALL MODEL'S RESPONSE:
 {small_model_response}
 
+# EXAMPLE EVALUATION:
+Let me demonstrate how to evaluate a prompt with chain-of-thought reasoning.
+
+Prompt variation: "List 5 ways to reduce plastic waste at home, with one sentence explaining each method."
+
+Small model response: "1. Use reusable bags when shopping to avoid plastic bags accumulating at home. 2. Buy products in bulk to reduce packaging waste. 3. Replace plastic containers with glass or metal alternatives that last longer. 4. Install a water filter instead of buying bottled water. 5. Choose products with minimal or recyclable packaging when shopping."
+
+My evaluation thought process:
+- First, I'll check if all instructions were followed (5 ways, one sentence each)
+- Next, I'll assess the quality and coherence of each suggestion
+- Then, I'll evaluate the practical usefulness of the advice
+- Finally, I'll consider how well the model stayed focused on the topic
+
+Score: 8.5/10
+
+Strengths:
+- The model successfully provided exactly 5 ways to reduce plastic waste
+- Each method is explained in a single, coherent sentence
+- The suggestions are practical and implementable at home
+- The response is well-structured and easy to follow
+
+Weaknesses:
+- Some explanations could be more detailed about environmental impact
+- The suggestions are somewhat generic rather than innovative
+- The response lacks an overall introduction or conclusion
+
+Analysis: The prompt worked well because it provided clear constraints (5 ways, one sentence each) that helped the small model structure its response. The topic was narrowly defined (plastic waste at home), which kept the model focused.
+
+Suggestions: To improve the prompt, add a request for unique or less common methods, ask for explanations that include environmental impact data, and request a brief introduction and conclusion.
+
 # EVALUATION INSTRUCTIONS:
-Carefully analyze the small model's response to the prompt variation. Score the response on a scale of 1-10 (10 being the best) and provide a detailed explanation of your evaluation.
+Carefully analyze the small model's response to the prompt variation. Score the response on a scale of 1-10 (10 being the best), using decimal precision (e.g., 7.5, 8.3, 9.7) for more nuanced evaluation. Provide a detailed explanation of your evaluation.
+
+First, share your chain-of-thought reasoning:
+1. Describe how you're approaching the evaluation (2-3 sentences)
+2. Walk through what you're looking for in each evaluation criterion
+3. Show how you arrived at your final score
 
 Focus on:
 1. Instruction following: Did the model correctly follow the instructions in the prompt?
@@ -23,7 +58,7 @@ Focus on:
 5. Improvement over expected baseline: How much better is this than what you'd expect from a basic prompt?
 
 Your evaluation must include:
-1. Score: X/10 (at the beginning of your response)
+1. Score: X/10 (must be at the beginning of your response in exactly this format: "Score: X/10", where X can be a decimal number like 7.5 or 9.3)
 2. Strengths: What aspects of the prompt worked well
 3. Weaknesses: What aspects could be improved
 4. Analysis: Why the prompt achieved the results it did

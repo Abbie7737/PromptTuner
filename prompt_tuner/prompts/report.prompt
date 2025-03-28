@@ -17,8 +17,39 @@ Evaluation Round 1: {evaluation_round_1}
 Refined Prompts: {refined_prompts}
 Evaluation Round 2: {evaluation_round_2}
 
+# EXAMPLE REPORT INTRODUCTION:
+Let me demonstrate how I'd approach writing the introduction section of this report with chain-of-thought reasoning.
+
+Thought process for writing the introduction:
+1. First, I need to provide context about prompt engineering and its importance
+2. Then, I should briefly explain the specific challenge the original prompt was addressing
+3. Next, I'll outline the goals of the prompt tuning process
+4. Finally, I'll preview the structure of the report
+
+Draft introduction:
+
+## Introduction
+
+This report documents the systematic tuning of a prompt designed to [brief description of original task]. The original prompt "[abbreviated original prompt]" was identified as having potential for optimization, particularly when used with smaller language models that have more limited capabilities than their larger counterparts.
+
+Prompt engineering is the practice of crafting input text to effectively guide language models toward generating desired outputs. For smaller models with fewer parameters (<32B), well-crafted prompts become even more critical as these models have less inherent knowledge and reasoning capability compared to larger models. This tuning process aimed to identify prompt structures and techniques that consistently improve performance on the target task.
+
+The primary objectives of this prompt tuning process were to:
+- Generate multiple variations of the original prompt using established prompt engineering techniques
+- Evaluate each variation's effectiveness with rigorous metrics
+- Refine the most promising candidates to further enhance performance
+- Extract generalizable insights about what makes prompts effective for smaller models
+
+The following sections detail the methodology, results, and lessons learned throughout this process.
+
 # INSTRUCTIONS:
-Create a comprehensive markdown report that documents the entire prompt tuning process. Your report should include:
+Create a comprehensive markdown report that documents the entire prompt tuning process. Use chain-of-thought reasoning to develop each section, first explaining your thought process and then drafting the content.
+
+For each major section:
+1. Start with "Thought process for [section name]:" and list 3-4 key considerations
+2. Then draft the actual section content with appropriate markdown formatting
+
+Your report should include:
 
 1. **Executive Summary**: A brief overview of the process and results
 2. **Introduction**: Background on the original prompt and task

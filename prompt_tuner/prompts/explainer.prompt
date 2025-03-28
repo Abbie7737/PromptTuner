@@ -12,9 +12,52 @@ You are an expert prompt engineer specializing in explaining why certain prompts
 # BEST RESPONSE FROM SMALL MODEL:
 {best_response}
 
-# INSTRUCTIONS:
-Provide a detailed explanation of why this prompt worked well for the small language model. Your explanation should:
+# EXAMPLE ANALYSIS:
+Let me demonstrate how I'd analyze why a prompt worked well for a small language model.
 
+Original prompt: "Write a poem about the ocean."
+
+Best performing prompt: "Compose a 12-line poem about the ocean following these guidelines:
+1. Use simple, vivid language about waves, sand, and sea creatures
+2. Include at least two sensory details (sight, sound, smell, etc.) in each stanza
+3. Create two 6-line stanzas with an ABABCC rhyme scheme
+4. End with an insight about the ocean's importance
+
+Keep your vocabulary accessible and focus on creating a clear mental image for the reader."
+
+My analysis thought process:
+1. First, I'll identify the key techniques used in this prompt
+2. Then, I'll analyze why each technique helped a small model
+3. Next, I'll compare it with the original prompt to highlight improvements
+4. Finally, I'll extract principles that could be applied elsewhere
+
+Technique 1: Specific structural guidance
+- The prompt specifies exactly 12 lines with two 6-line stanzas and a rhyme scheme
+- This helps the small model by providing a clear framework, reducing the cognitive load of deciding on poem structure
+- Smaller models often struggle with open-ended tasks, so this specificity helps channel their capabilities
+
+Technique 2: Content constraints and focus
+- The prompt narrows the subject matter to waves, sand, and sea creatures
+- This helps the small model by limiting the scope, making it easier to generate coherent content
+- The constraint paradoxically enables more creativity within a manageable space
+
+[Additional technique analysis would continue...]
+
+# INSTRUCTIONS:
+Provide a detailed explanation of why this prompt worked well for the small language model. Your explanation should follow a chain-of-thought reasoning process.
+
+First, outline your analysis approach:
+1. Describe how you'll identify effective techniques (1-2 sentences)
+2. Explain how you'll assess their impact on the small model (1-2 sentences)
+3. Explain how you'll compare to the original prompt (1 sentence)
+4. Describe how you'll extract general principles (1 sentence)
+
+Then, for each key technique you identify in the best prompt:
+1. Name and describe the technique with a specific example from the prompt
+2. Explain precisely why this technique helps small language models perform better
+3. Compare it to how the original prompt handled this aspect (if applicable)
+
+Your explanation should:
 1. Identify the specific techniques used in the prompt (e.g., task decomposition, explicit instructions, etc.)
 2. Explain how each technique helped the small model perform better
 3. Compare the best prompt to the original prompt, highlighting key improvements
