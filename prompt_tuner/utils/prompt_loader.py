@@ -65,8 +65,9 @@ class PromptLoader:
         with open(file_path, "r") as f:
             template = f.read()
 
-        if use_cache:
-            self.cache[name] = template
+        # Always update the cache with the latest content, regardless of use_cache
+        # This ensures the cache is up-to-date after any file read
+        self.cache[name] = template
 
         return template
 
