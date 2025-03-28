@@ -1,8 +1,8 @@
 # Exclude the docs directory from linting
 exclude = ["docs"]
 
-# Allow longer line length for specific paths
 [lint]
+# Allow longer line length for specific paths
 line-length = 88
 
 [lint.per-file-ignores]
