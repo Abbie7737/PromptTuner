@@ -82,7 +82,12 @@ class LMStudioManager:
 
         Returns:
             API response with completion data
+
+        Raises:
+            ValueError: When there's a model-specific error that can't be recovered
         """
+        model_name = os.environ.get("LMSTUDIO_LARGE_MODEL", "mistral-7b-instruct")
+        
         try:
             result = await self.large_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
@@ -90,31 +95,47 @@ class LMStudioManager:
             return dict(result)
         except Exception as e:
             error_msg = str(e)
-            print(f"Error with large model: {error_msg}")
-
-            # If it's a timeout or server error, we might want to retry with simplified content
+            
+            # Check for model-specific errors
+            if "Cannot perform inplace addition on an mlx.core.array and str" in error_msg:
+                raise ValueError(
+                    f"Error connecting to model '{model_name}': MLX array error detected. "
+                    f"This is typically resolved by restarting LM Studio. "
+                    f"If the issue persists after restart, try a different model."
+                )
+            
+            # Check for common recoverable errors
             if "400 Bad Request" in error_msg:
-                print("Bad request error - attempting with reduced message content")
+                print(f"Model '{model_name}' returned a bad request error - attempting with reduced message content")
 
                 # Simplify messages by truncating if they're too long
                 simplified_messages = []
                 for msg in messages:
-                    if (
-                        len(msg["content"]) > 8000
-                    ):  # If content is very long, truncate it
+                    if len(msg["content"]) > 8000:  # If content is very long, truncate it
                         msg["content"] = msg["content"][:8000] + "... [truncated]"
                     simplified_messages.append(msg)
 
-                # Try again with simplified messages
-                result = await self.large_model.chat_completion(
-                    messages=simplified_messages,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                )
-                return dict(result)
+                try:
+                    # Try again with simplified messages
+                    result = await self.large_model.chat_completion(
+                        messages=simplified_messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                    )
+                    return dict(result)
+                except Exception as retry_error:
+                    # If retry fails, provide a more helpful error message
+                    raise ValueError(
+                        f"The model '{model_name}' could not process the request, even after simplification. "
+                        f"Error: {str(retry_error)}. Please restart LM Studio and try again."
+                    ) from retry_error
             else:
-                # Re-raise the exception for other types of errors
-                raise
+                # For other errors, provide a more helpful error message
+                raise ValueError(
+                    f"Error with model '{model_name}': {error_msg}. "
+                    f"Please restart LM Studio, which resolves most issues. "
+                    f"If the problem persists after restart, try a different model."
+                ) from e
 
     async def run_on_small_model(
         self,
@@ -132,7 +153,12 @@ class LMStudioManager:
 
         Returns:
             API response with completion data
+            
+        Raises:
+            ValueError: When there's a model-specific error that can't be recovered
         """
+        model_name = os.environ.get("LMSTUDIO_SMALL_MODEL", "phi-2")
+        
         try:
             result = await self.small_model.chat_completion(
                 messages=messages, temperature=temperature, max_tokens=max_tokens
@@ -140,11 +166,18 @@ class LMStudioManager:
             return dict(result)
         except Exception as e:
             error_msg = str(e)
-            print(f"Error with small model: {error_msg}")
-
-            # If it's a timeout or bad request, try with simplified content
+            
+            # Check for model-specific errors
+            if "Cannot perform inplace addition on an mlx.core.array and str" in error_msg:
+                raise ValueError(
+                    f"Error connecting to model '{model_name}': MLX array error detected. "
+                    f"This is typically resolved by restarting LM Studio. "
+                    f"If the issue persists after restart, try a different model."
+                )
+            
+            # Check for common recoverable errors
             if "400 Bad Request" in error_msg or "ReadTimeout" in error_msg:
-                print("Request error - attempting with reduced message content")
+                print(f"Model '{model_name}' returned an error - attempting with reduced message content")
 
                 # Simplify messages by truncating if they're too long
                 simplified_messages = []
@@ -153,13 +186,24 @@ class LMStudioManager:
                         msg["content"] = msg["content"][:4000] + "... [truncated]"
                     simplified_messages.append(msg)
 
-                # Try again with simplified messages
-                result = await self.small_model.chat_completion(
-                    messages=simplified_messages,
-                    temperature=temperature,
-                    max_tokens=max_tokens,
-                )
-                return dict(result)
+                try:
+                    # Try again with simplified messages
+                    result = await self.small_model.chat_completion(
+                        messages=simplified_messages,
+                        temperature=temperature,
+                        max_tokens=max_tokens,
+                    )
+                    return dict(result)
+                except Exception as retry_error:
+                    # If retry fails, provide a more helpful error message
+                    raise ValueError(
+                        f"The model '{model_name}' could not process the request, even after simplification. "
+                        f"Error: {str(retry_error)}. Please restart LM Studio and try again."
+                    ) from retry_error
             else:
-                # Re-raise the exception for other types of errors
-                raise
+                # For other errors, provide a more helpful error message
+                raise ValueError(
+                    f"Error with model '{model_name}': {error_msg}. "
+                    f"Please restart LM Studio, which resolves most issues. "
+                    f"If the problem persists after restart, try a different model."
+                ) from e

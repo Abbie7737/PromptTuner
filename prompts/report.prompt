@@ -25,7 +25,8 @@ Create a comprehensive markdown report that documents the entire prompt tuning p
 6. **Prompt Refinement**: Description of how top prompts were refined
 7. **Final Evaluation**: Analysis of the refined prompts' performance
 8. **Final Result**: The best prompt with detailed explanation
-9. **Conclusion**: Key takeaways and lessons learned
+9. **Score Interpretation**: Include a note explaining that for a score of 9.7 or higher, a response must demonstrate excellence in all categories: perfect instruction following, exceptional coherence and completeness, high accuracy, appropriate creativity, and significant improvement over baseline expectations
+10. **Conclusion**: Key takeaways and lessons learned
 
 For each section:
 - Include relevant data from the provided information

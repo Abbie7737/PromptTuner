@@ -60,7 +60,8 @@ Your report should include:
 7. **Final Evaluation**: Analysis of the refined prompts' performance
 8. **Comparison of Rounds**: Which round produced better prompts and why
 9. **Final Result**: The best prompt with detailed explanation
-10. **Conclusion**: Key takeaways and lessons learned
+10. **Score Interpretation**: Include a note explaining that for a score of 9.7 or higher, a response must demonstrate excellence in all categories: perfect instruction following, exceptional coherence and completeness, high accuracy, appropriate creativity, and significant improvement over baseline expectations
+11. **Conclusion**: Key takeaways and lessons learned
 
 IMPORTANT: Make sure to compare the best scores from the first evaluation round to the final evaluation round. The best prompt should be chosen from either round based on which had the highest score, not automatically from the refined prompts.
 

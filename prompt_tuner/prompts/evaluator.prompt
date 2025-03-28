@@ -57,6 +57,8 @@ Focus on:
 4. Creativity (if applicable): Does the response show appropriate creativity?
 5. Improvement over expected baseline: How much better is this than what you'd expect from a basic prompt?
 
+For a score of 9.7 or higher, a response must demonstrate excellence in all categories: perfect instruction following, exceptional coherence and completeness, high accuracy, appropriate creativity, and significant improvement over baseline expectations.
+
 Your evaluation must include:
 1. Score: X/10 (must be at the beginning of your response in exactly this format: "Score: X/10", where X can be a decimal number like 7.5 or 9.3)
 2. Strengths: What aspects of the prompt worked well

@@ -25,22 +25,41 @@ async def run(
         task_description: Optional description of what the prompt should achieve
         env_file: Path to the environment file
     """
-    tuner = PromptTuner(env_file)
-    results = await tuner.tune(prompt, task_description)
+    try:
+        tuner = PromptTuner(env_file)
+        results = await tuner.tune(prompt, task_description)
 
-    print("\n" + "=" * 50)
-    print("✨ Prompt tuning complete! ✨")
-    print(f"Best prompt saved to: {results['report_path']}")
-    print(f"Full results saved to: {results['json_path']}")
-    print("=" * 50)
-    print("\nBest Prompt:")
-    print("-" * 50)
-    print(results["best_prompt"])
-    print("-" * 50)
-    print("\nExplanation:")
-    print("-" * 50)
-    print(results["explanation"])
-    print("-" * 50)
+        print("\n" + "=" * 50)
+        print("✨ Prompt tuning complete! ✨")
+        print(f"Best prompt saved to: {results['report_path']}")
+        print(f"Full results saved to: {results['json_path']}")
+        print("=" * 50)
+        print("\nBest Prompt:")
+        print("-" * 50)
+        print(results["best_prompt"])
+        print("-" * 50)
+        print("\nExplanation:")
+        print("-" * 50)
+        print(results["explanation"])
+        print("-" * 50)
+    except ValueError as e:
+        print("\n" + "=" * 50)
+        print("❌ Prompt tuning encountered an issue")
+        print("=" * 50)
+        print(f"\n{str(e)}")
+        print("\nTroubleshooting tips:")
+        print("1. Restart LM Studio - this resolves most issues")
+        print("2. Check if LM Studio is running properly")
+        print("3. Try a different model by updating your .env file")
+        print("4. Check if your model configuration is correct")
+        print("=" * 50)
+    except Exception as e:
+        print("\n" + "=" * 50)
+        print("❌ An unexpected error occurred")
+        print("=" * 50)
+        print(f"\n{str(e)}")
+        print("\nPlease report this issue if it persists.")
+        print("=" * 50)
 
 
 def main() -> int:
