@@ -7,7 +7,6 @@ from typing import Dict, List, Any, Optional, Tuple
 import json
 from datetime import datetime
 
-from pydantic_ai import Agent
 from prompt_tuner.utils.lmstudio import LMStudioManager
 from prompt_tuner.utils.prompt_loader import PromptLoader
 
@@ -381,33 +380,29 @@ This prompt was selected from the {best_round}.
             score = 0
             explanation = eval_content
             
-            # Try to extract score (expecting format like "Score: 8/10")
-            for line in eval_content.split("\n"):
-                if line.lower().startswith("score:"):
-                    try:
-                        # Extract number before the slash if present
-                        score_text = line.split(":")[1].strip()
-                        if "/" in score_text:
-                            score = float(score_text.split("/")[0].strip())
-                        else:
+            # Use regex as primary method to extract score (pattern like "Score: 8/10" or just "8/10")
+            import re
+            # Look for scores in formats like "Score: 8/10", "Score: 8 / 10", or just "8/10"
+            score_matches = re.findall(r'(?:score:?\s*)?(\d+(?:\.\d+)?)\s*/\s*10', eval_content, re.IGNORECASE)
+            if score_matches:
+                score = float(score_matches[0])
+                print(f"Extracted score using regex: {score}")
+            else:
+                # Fallback: look for lines starting with "Score:" with any number
+                for line in eval_content.split("\n"):
+                    if re.match(r'^score:?\s*\d+(?:\.\d+)?', line, re.IGNORECASE):
+                        try:
+                            # Extract just the number
+                            score_text = re.search(r'(\d+(?:\.\d+)?)', line).group(1)
                             score = float(score_text)
-                        print(f"Extracted score: {score}")
-                        break
-                    except (ValueError, IndexError):
-                        # If we can't parse the score, use 0
-                        print(f"Error parsing score from: {line}")
-                        score = 0
-            
-            if score == 0:
-                print("WARNING: Could not extract a score > 0 from evaluation")
-                print(f"First few lines of evaluation: {eval_content[:200]}...")
+                            print(f"Extracted score from line: {score}")
+                            break
+                        except (ValueError, IndexError, AttributeError):
+                            print(f"Error parsing score from: {line}")
                 
-                # Try one more parsing approach - look for any number followed by /10
-                import re
-                score_matches = re.findall(r'(\d+(?:\.\d+)?)\s*/\s*10', eval_content)
-                if score_matches:
-                    score = float(score_matches[0])
-                    print(f"Extracted score using regex: {score}")
+                if score == 0:
+                    print(f"WARNING: Could not extract a score from evaluation")
+                    print(f"First few lines of evaluation: {eval_content[:200]}...")
             
             evaluations.append({
                 "prompt": prompt,
