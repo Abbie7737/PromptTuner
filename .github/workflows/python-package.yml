@@ -33,11 +33,12 @@ jobs:
     - name: Lint with ruff
       run: |
         source .venv/bin/activate
-        ruff check .
+        # Exclude docs directory from linting
+        ruff check . --exclude docs/
     - name: Type check with mypy
       run: |
         source .venv/bin/activate
-        mypy .
+        mypy . --exclude docs/
     - name: Test with pytest
       run: |
         source .venv/bin/activate

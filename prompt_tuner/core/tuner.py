@@ -191,15 +191,17 @@ class PromptTuner:
             # Extract evaluation scores to include in the report
             initial_eval_summary = []
             for i, eval_item in enumerate(results["evaluation_round_1"]):
-                initial_eval_summary.append(
-                    f"{i + 1}. Score: {eval_item['score']:.1f}/10 - `{eval_item['prompt'][:100]}...`"
-                )
+                # Add summary entry with shortened prompt preview
+                summary = f"{i + 1}. Score: {eval_item['score']:.1f}/10"
+                preview = eval_item['prompt'][:80] + "..." if len(eval_item['prompt']) > 80 else eval_item['prompt']
+                initial_eval_summary.append(f"{summary} - `{preview}`")
 
             refined_eval_summary = []
             for i, eval_item in enumerate(results["evaluation_round_2"]):
-                refined_eval_summary.append(
-                    f"{i + 1}. Score: {eval_item['score']:.1f}/10 - `{eval_item['prompt'][:100]}...`"
-                )
+                # Add summary entry with shortened prompt preview
+                summary = f"{i + 1}. Score: {eval_item['score']:.1f}/10"
+                preview = eval_item['prompt'][:80] + "..." if len(eval_item['prompt']) > 80 else eval_item['prompt']
+                refined_eval_summary.append(f"{summary} - `{preview}`")
 
             # Find the best prompts from both rounds
             best_initial_score = 0
@@ -259,7 +261,7 @@ This prompt was selected from the {best_round}.
 ## Explanation
 {results["explanation"]}
 
-*Note: This is a simplified report generated due to an error during full report generation.*
+*Note: This is a simplified report due to an error during full report generation.*
 """
             with open(simple_report_path, "w") as f:
                 f.write(simple_report)
@@ -297,9 +299,10 @@ This prompt was selected from the {best_round}.
 
         # Create message for prompt generation
         user_msg = f"Generate {num_variations} variations of this prompt"
+        model_type = "for a small language model"
         messages = [
             {"role": "system", "content": generator_prompt},
-            {"role": "user", "content": f"{user_msg} for a small language model: {original_prompt}"},
+            {"role": "user", "content": f"{user_msg} {model_type}: {original_prompt}"},
         ]
 
         response = await self.lmstudio.run_on_large_model(
@@ -389,10 +392,10 @@ This prompt was selected from the {best_round}.
             score = 0
             explanation = eval_content
 
-            # Use regex as primary method to extract score (pattern like "Score: 8/10" or just "8/10")
+            # Extract score with regex
             import re
-
-            # Look for scores in formats like "Score: 8/10", "Score: 8 / 10", or just "8/10"
+            
+            # Look for score formats like "Score: 8/10" or "8/10"
             score_matches = re.findall(
                 r"(?:score:?\s*)?(\d+(?:\.\d+)?)\s*/\s*10", eval_content, re.IGNORECASE
             )
@@ -463,7 +466,7 @@ This prompt was selected from the {best_round}.
 
         messages = [
             {"role": "system", "content": refiner_prompt},
-            {"role": "user", "content": "Refine this prompt for better small model results."},
+            {"role": "user", "content": "Refine this prompt to improve results."},
         ]
 
         response = await self.lmstudio.run_on_large_model(
@@ -599,7 +602,7 @@ This prompt was selected from the {best_round}.
 
             messages = [
                 {"role": "system", "content": report_prompt},
-                {"role": "user", "content": "Create a detailed report of the prompt tuning process."},
+                {"role": "user", "content": "Create a report of the prompt tuning process."},
             ]
 
             response = await self.lmstudio.run_on_large_model(
